@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SensorReadingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,10 @@ Route::resource('alerts', AlertController::class)
 Route::get('alerts-table', [AlertController::class, 'table'])
 ->middleware(['auth', 'verified'])
 ->name('alerts.table');
+
+Route::resource('analytics', SensorReadingController::class)
+->middleware(['auth', 'verified'])
+->only(['index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

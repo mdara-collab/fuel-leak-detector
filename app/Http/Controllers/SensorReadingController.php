@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SensorReading;
 use Illuminate\Http\Request;
+use Inertia\Inertia; 
 
 class SensorReadingController extends Controller
 {
@@ -12,7 +13,7 @@ class SensorReadingController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Analytics/Index');
     }
 
     /**

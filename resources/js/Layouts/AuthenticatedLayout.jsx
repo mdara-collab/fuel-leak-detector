@@ -37,8 +37,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Alerts
                                 </NavLink>
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={false}
+                                    href={route('analytics.index')}
+                                    active={route().current('analytics.index')}
                                 >
                                     Analytics
                                 </NavLink>
@@ -165,8 +165,8 @@ export default function AuthenticatedLayout({ header, children }) {
                             Alerts
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={false}
+                            href={route('analytics.index')}
+                            active={route().current('analytics.index')}
                         >
                             Analytics
                         </ResponsiveNavLink>
