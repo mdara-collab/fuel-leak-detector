@@ -19,7 +19,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="font-bold text-xl w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
@@ -29,6 +29,30 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route('alerts.index')}
+                                    active={route().current('alerts.index') || route().current('alerts.table')}
+                                >
+                                    Alerts
+                                </NavLink>
+                                <NavLink
+                                    href={route('dashboard')}
+                                    active={false}
+                                >
+                                    Analytics
+                                </NavLink>
+                                <NavLink
+                                    href={route('dashboard')}
+                                    active={false}
+                                >
+                                    History
+                                </NavLink>
+                                <NavLink
+                                    href={route('dashboard')}
+                                    active={false}
+                                >
+                                    Settings
                                 </NavLink>
                             </div>
                         </div>
@@ -133,6 +157,30 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('alerts.index')}
+                            active={route().current('alerts.index') || route().current('alerts.table')}
+                        >
+                            Alerts
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('dashboard')}
+                            active={false}
+                        >
+                            Analytics
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('dashboard')}
+                            active={false}
+                        >
+                            History
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('dashboard')}
+                            active={false}
+                        >
+                            Settings
                         </ResponsiveNavLink>
                     </div>
 
