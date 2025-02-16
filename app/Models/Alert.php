@@ -13,6 +13,7 @@ class Alert extends Model
         'status',
         'level',
         'user_id', 
-        'timestamp'
+        'timestamp',
+        'sensor_reading_id'
     ];
 }
