@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewSensorReadingSaved;
 use App\Models\Alert;
 use App\Models\Sensor;
 use App\Models\SensorReading;
@@ -54,6 +55,8 @@ class SensorReadingController extends Controller
             'unit' => $request->input('unit'),
             'timestamp' => $request->input('timestamp')
         ]);
+
+        NewSensorReadingSaved::dispatch($sensorReading);
 
         $sensor = Sensor::find($request->sensor_id);
         $sensor->status = 'active';

@@ -1,11 +1,45 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import LineChart from './LineChart';
 import Select from '@/Components/Select';
 
 export default function Dashboard({
     data
 }){
+    const [sensorReadings, setSensorReadings] = useState(data);
+
+    useEffect(() => {
+        if (window.Echo) {
+            const channel = window.Echo.private(`sensorReadingSaved`)
+            .listen('NewSensorReadingSaved', (e) => {
+                console.log('New sensor reading:', e.sensorReading);
+
+                setSensorReadings((prevReadings) => {
+                    const isDuplicate = prevReadings.some(
+                        (reading) => {
+                            console.log(reading.id)
+                            return reading.id === e.sensorReading.id;
+                        }
+                    );
+
+                    if (!isDuplicate) {
+                        return [
+                            ...prevReadings,
+                            e.sensorReading
+                        ];
+                    }
+
+                    return prevReadings; // Return the same array if it's a duplicate
+                });
+            });
+
+            return () => {
+                channel.stopListening('NewSensorReadingSaved');
+            };
+        }
+    }, []);
+
     return (
         <AuthenticatedLayout
             header={
@@ -66,7 +100,7 @@ export default function Dashboard({
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 max-md:overflow-scroll md:flex justify-center">
                             <LineChart 
-                                data={data}
+                                data={sensorReadings}
                                 label={'Acquisitions by year'}
                             />
                         </div>

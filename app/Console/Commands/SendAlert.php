@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Events\NewSensorReadingSaved;
 use App\Mail\CriticalAlert;
+use App\Models\SensorReading;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -28,6 +30,6 @@ class SendAlert extends Command
      */
     public function handle()
     {
-        // Mail::to('comfort@gmail.com')->send(new CriticalAlert());
+        NewSensorReadingSaved::dispatch(SensorReading::find(7));
     }
 }
