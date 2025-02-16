@@ -31,6 +31,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                    href={route('sensors.index')}
+                                    active={route().current('sensors.index')}
+                                >
+                                    Sensors
+                                </NavLink>
+                                <NavLink
                                     href={route('alerts.index')}
                                     active={route().current('alerts.index') || route().current('alerts.table')}
                                 >
@@ -157,6 +163,12 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('sensors.index')}
+                            active={route().current('sensors.index')}
+                        >
+                            Sensors
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             href={route('alerts.index')}

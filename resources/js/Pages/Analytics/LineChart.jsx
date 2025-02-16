@@ -13,16 +13,16 @@ const LineChart = ({
 
   // Chart.js data configuration
   const chartData = {
-    labels: data.map((row) => row.time), // X-axis labels (years)
+    labels: data.map((row) => row.timestamp), // X-axis labels (years)
     datasets: [
       {
         label: label,
-        data: data.map((row) => row.reading), // Y-axis data (acquisition counts)
+        data: data.map((row) => row.value), // Y-axis data (acquisition counts)
         borderColor: 'rgba(128, 192, 192, 1)', // Line color
         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color under the line
         fill: true, // Fill the area under the line
         tension: 0.4, // Curve of the line
-        pointRadius: 5, // Size of the points
+        pointRadius: 0, // Size of the points
         pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Point color
         pointBorderColor: 'rgba(255, 255, 255, 1)', // Point border color
       },

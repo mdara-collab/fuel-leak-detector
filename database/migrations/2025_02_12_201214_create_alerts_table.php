@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sensors', function (Blueprint $table) {
+        Schema::create('alerts', function (Blueprint $table) {
             $table->id();
-            $table->string('sensor_type');
+            $table->foreignId('sensor_id')->constrained()->onDelete('cascade');
             $table->string('location');
-            $table->timestamp('installation_date');
-            $table->timestamp('last_calibration_date')->nullable();
-            $table->enum('status', ['active', 'inactive']);
+            $table->string('description');
+            $table->enum('status', ['active', 'resolved']);
+            $table->enum('level', ['critical', 'warning']);
+            $table->timestamp('timestamp');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sensors');
+        Schema::dropIfExists('alerts');
     }
 };

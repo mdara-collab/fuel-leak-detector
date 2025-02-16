@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Sensor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class SensorController extends Controller
 {
@@ -12,7 +14,9 @@ class SensorController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Sensor/Index',[
+            'sensors' => Sensor::all()
+        ]);
     }
 
     /**
@@ -20,7 +24,7 @@ class SensorController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Sensor/Create');
     }
 
     /**
@@ -28,7 +32,33 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+
+        $request->validate([
+            'sensor_type' => 'required|string|in:petrol,diesel',
+            'location' => 'required|string|max:255',
+            'installation_date' => 'required|date',
+            'sensor_identifier' => 'required|string|max:255|unique:sensors,sensor_identifier',
+        ]);
+
+        $sensor = new Sensor();
+
+        $sensor->sensor_type = $request->sensor_type;
+        $sensor->location = $request->location;
+        $sensor->installation_date = $request->installation_date;
+        $sensor->sensor_identifier = $request->sensor_identifier;
+        $sensor->status = 'inactive';
+        $sensor->last_seen = null;
+        $sensor->last_calibration_date = null;
+        $sensor->owner_id = Auth::id();
+
+        $sensor->save();
+
+        return redirect()
+            ->route('sensors.index')
+            ->withInput([
+                'message' => 'Sensor registered successfully!'
+            ]);
     }
 
     /**

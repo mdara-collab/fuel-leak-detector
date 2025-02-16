@@ -34,7 +34,27 @@ class AlertController extends Controller
      */
     public function store(Request $request)
     {
-        return 'sdasda';
+        $request->validate([
+            'sensor_id' => 'required|exists:sensors,id',
+            'location' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'status' => 'required|in:active,resolved',
+            'level' => 'required|in:critical,warning',
+            'user_id' => 'nullable|exists:users,id',
+            'timestamp' => 'required|date',
+        ]);        
+
+        Alert::create([
+            'sensor_id' => $request->input('sensor_id'),
+            'location' => $request->input('location'),
+            'description' => $request->input('description'),
+            'status' => $request->input('status'),
+            'level' => $request->input('level'),
+            'user_id' => $request->input('user_id'), 
+            'timestamp' => $request->input('timestamp')
+        ]);
+
+        return 'Successfully Alerted User';
     }
 
     /**

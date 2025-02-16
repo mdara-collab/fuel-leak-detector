@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SensorController;
 use App\Http\Controllers\SensorReadingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('alerts', AlertController::class)
 ->middleware(['auth', 'verified'])
-->except(['create', 'show', 'edit']);
+->only(['index']);
 
 Route::get('alerts-table', [AlertController::class, 'table'])
 ->middleware(['auth', 'verified'])
@@ -32,10 +33,18 @@ Route::resource('analytics', SensorReadingController::class)
 ->middleware(['auth', 'verified'])
 ->only(['index']);
 
+Route::resource('sensors', SensorController::class)
+->middleware(['auth', 'verified'])
+->only(['index', 'create', 'store']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// No CSRF
+Route::post('sensor-readings', [SensorReadingController::class, 'store']);
+Route::post('alerts', [AlertController::class, 'store']);
 
 require __DIR__.'/auth.php';
