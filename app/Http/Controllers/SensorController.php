@@ -32,8 +32,6 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-
         $request->validate([
             'sensor_type' => 'required|string|in:petrol,diesel',
             'location' => 'required|string|max:255',
